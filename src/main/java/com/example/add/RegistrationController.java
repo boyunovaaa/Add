@@ -1,11 +1,12 @@
 package com.example.add;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class RegistrationController {
 
@@ -26,6 +27,19 @@ public class RegistrationController {
 
     @FXML
     void initialize() {
+        checkButton.setOnAction(actionEvent -> {
+            newUser();
+        });
+    }
 
+    private void newUser() {
+        Connections connect = new Connections();
+
+        String login = loginField.getText();
+        String password = passwordField.getText();
+
+        User user = new User(login, password);
+
+        connect.newUser(user);
     }
 }

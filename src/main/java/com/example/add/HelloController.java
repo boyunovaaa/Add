@@ -1,8 +1,5 @@
 package com.example.add;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class HelloController{
 
@@ -34,6 +35,19 @@ public class HelloController{
 
     @FXML
     void initialize() {
+
+        checkButton.setOnAction(actionEvent -> {
+            String TextLogin = loginField.getText().trim();
+            String TextPass = passwordField.getText().trim();
+
+            if(!TextLogin.equals("") && !TextPass.equals("")){
+                UserLogin(TextLogin, TextPass);
+            }
+            else{
+                System.out.println("Error");
+            }
+        });
+
         newUserButton.setOnAction(actionEvent -> {
             newUserButton.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();
@@ -49,5 +63,9 @@ public class HelloController{
             stage.setScene(new Scene(source));
             stage.showAndWait();
         });
+    }
+
+    private void UserLogin(String textLogin, String textPass) {
+
     }
 }
