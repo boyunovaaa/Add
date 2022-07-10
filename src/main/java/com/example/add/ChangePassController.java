@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegistrationController {
+public class ChangePassController {
 
     @FXML
     private ResourceBundle resources;
@@ -28,14 +28,17 @@ public class RegistrationController {
     private PasswordField passwordField;
 
     @FXML
-    private Button checkButton;
+    private Button changePasswordButton;
+
+    @FXML
+    private PasswordField newPassField;
 
     @FXML
     void initialize() {
-        checkButton.setOnAction(actionEvent -> {
-            newUser();
+        changePasswordButton.setOnAction(actionEvent -> {
+            changeUser();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("hello-view.fxml"));
+            loader.setLocation(getClass().getResource("quotes.fxml"));
             try {
                 loader.load();
             } catch (IOException e) {
@@ -49,13 +52,14 @@ public class RegistrationController {
         });
     }
 
-    private void newUser() {
+    private void changeUser() {
         Connections connect = new Connections();
 
         String login = loginField.getText();
         String password = passwordField.getText();
+        String newPass = newPassField.getText();
 
-        User user = new User(login, password);
+        User user = new User(login, password, newPass);
 
         connect.newUser(user);
     }

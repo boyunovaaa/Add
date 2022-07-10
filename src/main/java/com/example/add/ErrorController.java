@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class HelloController{
+public class ErrorController {
 
     @FXML
     private ResourceBundle resources;
@@ -36,8 +36,7 @@ public class HelloController{
     private Button checkButton;
 
     @FXML
-    void initialize() {
-
+    void initialize(){
         checkButton.setOnAction(actionEvent -> {
             String TextLogin = loginField.getText().trim();
             String TextPass = passwordField.getText().trim();

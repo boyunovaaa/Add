@@ -1,9 +1,6 @@
 package com.example.add;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.DriverManager;
+import java.sql.*;
 
 public class Connections{
     Connection dbConnection;
@@ -25,6 +22,42 @@ public class Connections{
             PreparedStatement values = getDbConnection().prepareStatement(insert);
             values.setString(1, user.getLogin());
             values.setString(2, user.getPassword());
+
+            values.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet getUser(User user){
+        ResultSet result = null;
+
+        String select = "SELECT * FROM Пользователь WHERE Логин =? AND Пароль =?";
+
+        try {
+            PreparedStatement values = getDbConnection().prepareStatement(select);
+            values.setString(1, user.getLogin());
+            values.setString(2, user.getPassword());
+
+            result = values.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public void changeUser(User user){
+        String update = "UPDATE Пользователь SET Пароль=? WHERE Логин=? AND Пароль=?";
+
+        try {
+            PreparedStatement values = getDbConnection().prepareStatement(update);
+            values.setString(1, user.getNewPass());
+            values.setString(2, user.getLogin());
+            values.setString(3, user.getPassword());
 
             values.executeUpdate();
         } catch (SQLException e) {
