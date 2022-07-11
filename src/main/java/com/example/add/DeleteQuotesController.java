@@ -13,7 +13,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddQuotesController {
+public class DeleteQuotesController {
 
     @FXML
     private ResourceBundle resources;
@@ -22,27 +22,26 @@ public class AddQuotesController {
     private URL location;
 
     @FXML
-    private TextField textField;
+    private TextField numberField;
 
     @FXML
-    private TextField dateField;
-
-    @FXML
-    private Button addQuotesButton;
-
-    @FXML
-    private TextField subjectField;
+    private Button deleteQuotesButton;
 
     @FXML
     private Button backButton;
 
     @FXML
-    private TextField teacherField;
-
-    @FXML
     void initialize() {
-        addQuotesButton.setOnAction(actionEvent -> {
-            newQuotes();
+        deleteQuotesButton.setOnAction(actionEvent -> {
+            Connections connect = new Connections();
+            try {
+                connect.deleteQuotes(Integer.parseInt(numberField.getText()));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("quotes.fxml"));
             try {
@@ -54,7 +53,7 @@ public class AddQuotesController {
             Parent source = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(source));
-            stage.show();
+            stage.showAndWait();
         });
 
         backButton.setOnAction(actionEvent -> {
@@ -72,20 +71,5 @@ public class AddQuotesController {
             stage.setScene(new Scene(source));
             stage.show();
         });
-    }
-
-    public void newQuotes(){
-        Connections connect = new Connections();
-        try {
-            connect.newQuotes(textField.getText(),
-                    subjectField.getText(),
-                    teacherField.getText(),
-                    dateField.getText(),
-                    UserQuotes.user.getId());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -10,10 +10,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddQuotesController {
+public class EditQuotesController {
 
     @FXML
     private ResourceBundle resources;
@@ -25,24 +24,27 @@ public class AddQuotesController {
     private TextField textField;
 
     @FXML
-    private TextField dateField;
-
-    @FXML
-    private Button addQuotesButton;
-
-    @FXML
-    private TextField subjectField;
+    private Button editQuotesButton;
 
     @FXML
     private Button backButton;
 
     @FXML
+    private TextField dateField;
+
+    @FXML
+    private TextField subjectField;
+
+    @FXML
     private TextField teacherField;
 
     @FXML
+    private TextField numberField;
+
+    @FXML
     void initialize() {
-        addQuotesButton.setOnAction(actionEvent -> {
-            newQuotes();
+        editQuotesButton.setOnAction(actionEvent -> {
+            editQuotes();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("quotes.fxml"));
             try {
@@ -54,7 +56,7 @@ public class AddQuotesController {
             Parent source = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(source));
-            stage.show();
+            stage.showAndWait();
         });
 
         backButton.setOnAction(actionEvent -> {
@@ -74,18 +76,18 @@ public class AddQuotesController {
         });
     }
 
-    public void newQuotes(){
+    public void editQuotes(){
         Connections connect = new Connections();
-        try {
-            connect.newQuotes(textField.getText(),
-                    subjectField.getText(),
-                    teacherField.getText(),
-                    dateField.getText(),
-                    UserQuotes.user.getId());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        String id = numberField.getText();
+        String text = textField.getText();
+        String date = dateField.getText();
+        String subject = subjectField.getText();
+        String teacher = teacherField.getText();
+        Integer user_id = UserQuotes.user.getId();
+
+        Quotes quotes = new Quotes(id, text, date, subject, user_id, teacher);
+
+        connect.editQuotes(quotes);
     }
 }

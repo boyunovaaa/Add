@@ -28,6 +28,9 @@ public class RegistrationController {
     private PasswordField passwordField;
 
     @FXML
+    private TextField GroupField;
+
+    @FXML
     private Button checkButton;
 
     @FXML
@@ -73,8 +76,9 @@ public class RegistrationController {
 
         String login = loginField.getText();
         String password = passwordField.getText();
+        String group = GroupField.getText();
 
-        User user = new User(login, password);
+        User user = new User(login, password, group);
 
         connect.newUser(user);
     }

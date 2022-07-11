@@ -40,14 +40,12 @@ public class HelloController{
 
     @FXML
     void initialize() {
-        Connections connect = new Connections();
         checkButton.setOnAction(actionEvent -> {
             String TextLogin = loginField.getText().trim();
             String TextPass = passwordField.getText().trim();
 
             if(!TextLogin.equals("") && !TextPass.equals("")){
                 UserLogin(TextLogin, TextPass);
-                connect.userID(TextLogin, TextPass);
             }
             else{
                 System.out.println("Error");
@@ -67,13 +65,13 @@ public class HelloController{
             Parent source = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(source));
-            stage.showAndWait();
+            stage.show();
         });
 
         showButton.setOnAction(actionEvent -> {
             showButton.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("quotes.fxml"));
+            loader.setLocation(getClass().getResource("sawQuotes.fxml"));
             try {
                 loader.load();
             } catch (IOException e) {
@@ -83,7 +81,7 @@ public class HelloController{
             Parent source = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(source));
-            stage.showAndWait();
+            stage.show();
         });
     }
 
@@ -120,7 +118,7 @@ public class HelloController{
                 Parent source = loader.getRoot();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(source));
-                stage.showAndWait();
+                stage.show();
             });
         }
         else {
@@ -140,5 +138,15 @@ public class HelloController{
                 stage.show();
             });
         }
+        try {
+            result.next();
+            UserQuotes.user = new User(
+                    result.getInt("id"),
+                    result.getString("login"),
+                    result.getString("password"),
+                    result.getString("group"),
+                    result.getInt("status")
+            );
+        } catch (Exception e) {}
     }
 }

@@ -74,6 +74,17 @@ public class ErrorController {
         user.setPassword(textPass);
         ResultSet result = connect.getUser(user);
 
+        try {
+            result.next();
+            UserQuotes.user = new User(
+                    result.getInt("id"),
+                    result.getString("login"),
+                    result.getString("password"),
+                    result.getString("group"),
+                    result.getInt("status")
+            );
+        } catch (Exception e) {}
+
         int counter = 0;
         while (true){
             try {

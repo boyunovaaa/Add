@@ -26,7 +26,7 @@ public class Connections{
             ResultSet result = statement.executeQuery(select);
             while (result.next()) {
                 arr.add(new Quotes(
-                        result.getInt("id"),
+                        result.getString("id"),
                         result.getString("Текст"),
                         result.getString("Дата"),
                         result.getString("Предмет"),
@@ -39,12 +39,14 @@ public class Connections{
     }
 
     public void newUser(User user){
-        String insert = "INSERT INTO Пользователь (Логин, Пароль) VALUES(?,?)";
+        String insert = "INSERT INTO Пользователь (Логин, Пароль, Группа) VALUES(?,?,?)";
 
         try {
             PreparedStatement values = getDbConnection().prepareStatement(insert);
             values.setString(1, user.getLogin());
             values.setString(2, user.getPassword());
+            values.setString(3, user.getGroup());
+
 
             values.executeUpdate();
         } catch (SQLException e) {
@@ -90,17 +92,43 @@ public class Connections{
         }
     }
 
-    public void newQuotes(Quotes quotes){
-        String insert = "INSERT INTO Цитата (Текст, Дата, Предмет, id_пользователя, Преподаватель) VALUES(?,?,?,?,?)";
+    public void newQuotes(String text, String subject, String teacher, String date, Integer user_id) throws ClassNotFoundException, SQLException{
+        Connections connect = new Connections();
+        Statement statement = connect.getDbConnection().createStatement();
+        try {
+            statement.executeUpdate(String.format(
+                    "INSERT INTO `Цитата` (`Текст`, `Дата`, `Предмет`, `id_пользователя`, `Преподаватель`) " +
+                            "VALUES ('%s', Date('%s'), '%s', '%s', %s)",
+                    text, date, subject, user_id, teacher
+            ));
+        } catch (Exception e) {System.out.println("error");}
+    }
+
+    public static void deleteQuotes(int id) throws ClassNotFoundException, SQLException{
+        Connections connect = new Connections();
+        Statement statement = connect.getDbConnection().createStatement();
+        try {
+        String query = String.format(
+                "DELETE FROM `Цитата` " +
+                        "WHERE `id`=%s",
+                id
+        );
+            statement.executeUpdate(query);
+        } catch (Exception e) {}
+    }
+
+    public void editQuotes(Quotes quotes){
+        String update = "UPDATE Цитата SET id=?, Текст=?, Дата=?, Предмет=?, id_пользователя=?, Преподаватель=? WHERE id=?";
 
         try {
-            PreparedStatement values = getDbConnection().prepareStatement(insert);
-            values.setString(1, quotes.getText());
-            values.setString(2, quotes.getDate());
-            values.setString(3, quotes.getSubject());
-            //values.setString(4, quotes.getUserId());
-            values.setString(5, quotes.getTeacher());
-
+            PreparedStatement values = getDbConnection().prepareStatement(update);
+            values.setString(1, quotes.getId());
+            values.setString(2, quotes.getText());
+            values.setString(3, quotes.getDate());
+            values.setString(4, quotes.getSubject());
+            values.setInt(5, quotes.getUserId());
+            values.setString(6, quotes.getTeacher());
+            values.setString(7, quotes.getId());
 
             values.executeUpdate();
         } catch (SQLException e) {
@@ -108,9 +136,5 @@ public class Connections{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public void userID(String login, String password){
-
     }
 }

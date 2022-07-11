@@ -13,7 +13,7 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String login, String password, int status, String group) {
+    public User(int id, String login, String password, String group, int status) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -21,14 +21,13 @@ public class User {
         this.status = status;
     }
 
-    public User() {
-    }
-
     public User(String login, String password, String newPass){
         this.login = login;
         this.password = password;
         this.newPass = newPass;
     }
+
+    public User(){}
 
     public int getId() {
         return id;

@@ -1,14 +1,14 @@
 package com.example.add;
 
 public class Quotes {
-    private Integer id;
+    private String id;
     private String Text;
     private String Date;
     private String Subject;
     private Integer UserId;
     private String Teacher;
 
-    public Quotes(Integer id, String Text, String Date, String Subject, Integer UserId, String Teacher) {
+    public Quotes(String id, String Text, String Date, String Subject, Integer UserId, String Teacher) {
         this.id = id;
         this.Text = Text;
         this.Date = Date;
@@ -57,11 +57,11 @@ public class Quotes {
         this.UserId = UserId;
     }
 
-    public Integer getId(){
+    public String getId(){
         return id;
     }
 
-    public void setId(Integer id){
+    public void setId(String id){
         this.id = id;
     }
 }

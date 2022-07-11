@@ -108,5 +108,53 @@ public class QuotesController {
             stage.setScene(new Scene(source));
             stage.show();
         });
+
+        deleteButton.setOnAction(actionEvent -> {
+            deleteButton.getScene().getWindow().hide();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("deleteQuotes.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent source = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(source));
+            stage.show();
+        });
+
+        exitButton.setOnAction(actionEvent -> {
+            exitButton.getScene().getWindow().hide();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("hello-view.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent source = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(source));
+            stage.show();
+        });
+
+        editButton.setOnAction(actionEvent -> {
+            editButton.getScene().getWindow().hide();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("editQuotes.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent source = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(source));
+            stage.show();
+        });
     }
 }
