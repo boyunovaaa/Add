@@ -144,4 +144,19 @@ public class Connections{
             e.printStackTrace();
         }
     }
+
+    public static int countQuotes() {
+        try {
+            Connections connect = new Connections();
+            Statement statement = connect.getDbConnection().createStatement();
+
+            String query = "SELECT COUNT(*) AS 'count' FROM `Цитата` " +
+                    "WHERE `id_пользователя`=" + UserQuotes.user.getId();
+
+            ResultSet res = statement.executeQuery(query);
+            res.next();
+            return res.getInt("count");
+        } catch (Exception e) {}
+        return 0;
+    }
 }

@@ -53,5 +53,10 @@
             <Font name="Times New Roman" size="14.0" />
          </font>
       </Button>
+      <Button fx:id="countButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="145.0" style="-fx-background-color: #CD5C5C;" text="Количество записей" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>
