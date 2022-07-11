@@ -4,7 +4,7 @@ public class UserQuotes {
     static User user;
     static Quotes quotes;
 
-    public UserQuotes(User u) {
-        user = u;
+    public UserQuotes(User user) {
+        this.user = user;
     }
 }

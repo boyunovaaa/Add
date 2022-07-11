@@ -59,7 +59,7 @@ public class Connections{
     public ResultSet getUser(User user){
         ResultSet result = null;
 
-        String select = "SELECT * FROM Пользователь WHERE Логин =? AND Пароль =?";
+        String select = "SELECT * FROM Пользователь WHERE Логин =? AND Пароль=?";
 
         try {
             PreparedStatement values = getDbConnection().prepareStatement(select);
@@ -92,16 +92,23 @@ public class Connections{
         }
     }
 
-    public void newQuotes(String text, String subject, String teacher, String date, Integer user_id) throws ClassNotFoundException, SQLException{
-        Connections connect = new Connections();
-        Statement statement = connect.getDbConnection().createStatement();
+    public void newQuotes(String text, String date, String subject, int user_id, String teacher) throws ClassNotFoundException, SQLException{
+        String insert = "INSERT INTO Цитата (Текст, Дата, Предмет, id_пользователя, Преподаватель) VALUES(?,?,?,?,?)";
+
         try {
-            statement.executeUpdate(String.format(
-                    "INSERT INTO `Цитата` (`Текст`, `Дата`, `Предмет`, `id_пользователя`, `Преподаватель`) " +
-                            "VALUES ('%s', Date('%s'), '%s', '%s', %s)",
-                    text, date, subject, user_id, teacher
-            ));
-        } catch (Exception e) {System.out.println("error");}
+            PreparedStatement values = getDbConnection().prepareStatement(insert);
+            values.setString(1, text);
+            values.setString(2, date);
+            values.setString(3, subject);
+            values.setInt(4, user_id);
+            values.setString(5, teacher);
+
+            values.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void deleteQuotes(int id) throws ClassNotFoundException, SQLException{

@@ -78,10 +78,10 @@ public class AddQuotesController {
         Connections connect = new Connections();
         try {
             connect.newQuotes(textField.getText(),
-                    subjectField.getText(),
-                    teacherField.getText(),
                     dateField.getText(),
-                    UserQuotes.user.getId());
+                    subjectField.getText(),
+                    UserQuotes.user.getId(),
+                    teacherField.getText());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

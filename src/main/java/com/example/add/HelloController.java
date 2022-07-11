@@ -93,10 +93,23 @@ public class HelloController{
         user.setPassword(textPass);
         ResultSet result = connect.getUser(user);
 
+        try {
+            result.next();
+                UserQuotes.user = new User(
+                        result.getInt("id"),
+                        result.getString("Логин"),
+                        result.getString("Пароль"),
+                        result.getString("Группа"),
+                        result.getInt("Статус")
+                );
+
+        } catch (Exception e) {;}
+
+        ResultSet result2 = connect.getUser(user);
         int counter = 0;
         while (true){
             try {
-                if (!result.next()){
+                if (!result2.next()){
                     break;
                 }
             } catch (SQLException e) {
@@ -138,15 +151,6 @@ public class HelloController{
                 stage.show();
             });
         }
-        try {
-            result.next();
-            UserQuotes.user = new User(
-                    result.getInt("id"),
-                    result.getString("login"),
-                    result.getString("password"),
-                    result.getString("group"),
-                    result.getInt("status")
-            );
-        } catch (Exception e) {}
+
     }
 }
