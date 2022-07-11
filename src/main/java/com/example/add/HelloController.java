@@ -40,13 +40,14 @@ public class HelloController{
 
     @FXML
     void initialize() {
-
+        Connections connect = new Connections();
         checkButton.setOnAction(actionEvent -> {
             String TextLogin = loginField.getText().trim();
             String TextPass = passwordField.getText().trim();
 
             if(!TextLogin.equals("") && !TextPass.equals("")){
                 UserLogin(TextLogin, TextPass);
+                connect.userID(TextLogin, TextPass);
             }
             else{
                 System.out.println("Error");
@@ -97,7 +98,9 @@ public class HelloController{
         int counter = 0;
         while (true){
             try {
-                if (!result.next()) break;
+                if (!result.next()){
+                    break;
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -1,13 +1,24 @@
 package com.example.add;
 
 public class User {
+    private int id;
     private String login;
     private String password;
+    private String group;
     private String newPass;
+    private int status;
 
     public User(String login, String password){
         this.login = login;
         this.password = password;
+    }
+
+    public User(int id, String login, String password, int status, String group) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.group = group;
+        this.status = status;
     }
 
     public User() {
@@ -17,6 +28,18 @@ public class User {
         this.login = login;
         this.password = password;
         this.newPass = newPass;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     public String getLogin(){
