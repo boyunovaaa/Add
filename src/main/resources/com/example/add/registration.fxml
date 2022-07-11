@@ -23,6 +23,11 @@
                         <Font name="Times New Roman" size="16.0" />
                     </font>
                 </Button>
+            <Button fx:id="backButton" layoutX="619.0" layoutY="235.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="67.0" style="-fx-background-color: #CD5C5C;" text="Назад" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman" size="16.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
         <Label layoutX="211.0" layoutY="39.0" text="Teacher quotes">

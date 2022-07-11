@@ -36,6 +36,9 @@ public class HelloController{
     private Button checkButton;
 
     @FXML
+    private Button showButton;
+
+    @FXML
     void initialize() {
 
         checkButton.setOnAction(actionEvent -> {
@@ -54,6 +57,22 @@ public class HelloController{
             newUserButton.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("registration.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent source = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(source));
+            stage.showAndWait();
+        });
+
+        showButton.setOnAction(actionEvent -> {
+            showButton.getScene().getWindow().hide();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("quotes.fxml"));
             try {
                 loader.load();
             } catch (IOException e) {
@@ -115,7 +134,7 @@ public class HelloController{
                 Parent source = loader.getRoot();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(source));
-                stage.showAndWait();
+                stage.show();
             });
         }
     }

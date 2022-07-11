@@ -62,7 +62,7 @@ public class ErrorController {
             Parent source = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(source));
-            stage.showAndWait();
+            stage.show();
         });
     }
 
@@ -97,7 +97,7 @@ public class ErrorController {
                 Parent source = loader.getRoot();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(source));
-                stage.showAndWait();
+                stage.show();
             });
         }
         else {
@@ -114,7 +114,7 @@ public class ErrorController {
                 Parent source = loader.getRoot();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(source));
-                stage.showAndWait();
+                stage.show();
             });
         }
     }

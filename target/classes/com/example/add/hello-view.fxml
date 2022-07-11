@@ -28,6 +28,11 @@
                   <Font name="Times New Roman" size="16.0" />
                </font>
             </Button>
+            <Button fx:id="showButton" layoutX="544.0" layoutY="209.0" mnemonicParsing="false" style="-fx-background-color: #CD5C5C;" text="Просмотреть цитаты" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <Label layoutX="211.0" layoutY="39.0" text="Teacher quotes">

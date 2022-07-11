@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,10 +22,29 @@ public class QuotesController {
     private URL location;
 
     @FXML
+    private TableView<?> tableQuotes;
+
+    @FXML
+    private TableColumn<?, ?> id;
+
+    @FXML
+    private TableColumn<?, ?> Text;
+
+    @FXML
+    private TableColumn<?, ?> Date;
+
+    @FXML
+    private TableColumn<?, ?> Subject;
+
+    @FXML
+    private TableColumn<?, ?> Teacher;
+
+    @FXML
     private Button changePassButton;
 
     @FXML
     void initialize() {
+        initTable();
         changePassButton.setOnAction(actionEvent -> {
             changePassButton.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();
@@ -37,7 +58,11 @@ public class QuotesController {
             Parent source = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(source));
-            stage.showAndWait();
+            stage.show();
         });
+    }
+
+    private void initTable() {
+
     }
 }

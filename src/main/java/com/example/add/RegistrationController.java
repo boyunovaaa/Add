@@ -31,6 +31,9 @@ public class RegistrationController {
     private Button checkButton;
 
     @FXML
+    private Button backButton;
+
+    @FXML
     void initialize() {
         checkButton.setOnAction(actionEvent -> {
             newUser();
@@ -46,6 +49,22 @@ public class RegistrationController {
             Stage stage = new Stage();
             stage.setScene(new Scene(source));
             stage.showAndWait();
+        });
+
+        backButton.setOnAction(actionEvent -> {
+            backButton.getScene().getWindow().hide();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("hello-view.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Parent source = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(source));
+            stage.show();
         });
     }
 
