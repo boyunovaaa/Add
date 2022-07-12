@@ -111,7 +111,7 @@ public class Connections{
         }
     }
 
-    public static void deleteQuotes(int id) throws ClassNotFoundException, SQLException{
+    public static void deleteQuotes3(int id) throws ClassNotFoundException, SQLException{
         Connections connect = new Connections();
         Statement statement = connect.getDbConnection().createStatement();
         try {
@@ -124,7 +124,34 @@ public class Connections{
         } catch (Exception e) {}
     }
 
-    public void editQuotes(Quotes quotes){
+    public static void deleteQuotes2(int id) throws ClassNotFoundException, SQLException{
+        Connections connect = new Connections();
+        Statement statement = connect.getDbConnection().createStatement();
+        try {
+            String query = String.format(
+                    "DELETE FROM `Цитата` " +
+                            "WHERE `id`=%s AND id_пользователя=%s",
+                    id, UserQuotes.user.getId()
+            );
+            statement.executeUpdate(query);
+        } catch (Exception e) {}
+    }
+
+    public static void deleteQuotes1(int id) throws ClassNotFoundException, SQLException{
+        Connections connect = new Connections();
+        Statement statement = connect.getDbConnection().createStatement();
+        try {
+            String query = String.format(
+                    "DELETE FROM `Цитата` " +
+                            "WHERE `id`=%s AND (SELECT `Группа` FROM `Пользователь` WHERE `id`=`id_пользователя` LIMIT 1) = %s",
+                    id, UserQuotes.user.getGroup()
+            );
+            statement.executeUpdate(query);
+        } catch (Exception e) {}
+    }
+
+    public void editQuotes3(Quotes quotes){
+
         String update = "UPDATE Цитата SET id=?, Текст=?, Дата=?, Предмет=?, id_пользователя=?, Преподаватель=? WHERE id=?";
 
         try {
@@ -145,6 +172,53 @@ public class Connections{
         }
     }
 
+    public void editQuotes2(Quotes quotes) {
+
+        String update = "UPDATE Цитата SET id=?, Текст=?, Дата=?, Предмет=?, id_пользователя=?, Преподаватель=? WHERE id=? AND id_пользователя=?";
+
+        try {
+            PreparedStatement values = getDbConnection().prepareStatement(update);
+            values.setString(1, quotes.getId());
+            values.setString(2, quotes.getText());
+            values.setString(3, quotes.getDate());
+            values.setString(4, quotes.getSubject());
+            values.setInt(5, quotes.getUserId());
+            values.setString(6, quotes.getTeacher());
+            values.setString(7, quotes.getId());
+            values.setInt(8, UserQuotes.user.getId());
+
+            values.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editQuotes1(Quotes quotes) {
+
+        String update = "UPDATE Цитата SET id=?, Текст=?, Дата=?, Предмет=?, id_пользователя=?, Преподаватель=? WHERE (id=? AND ((SELECT `Группа` FROM `Пользователь` WHERE `id`=`id_пользователя` LIMIT 1)=?))";
+
+        try {
+            PreparedStatement values = getDbConnection().prepareStatement(update);
+            values.setString(1, quotes.getId());
+            values.setString(2, quotes.getText());
+            values.setString(3, quotes.getDate());
+            values.setString(4, quotes.getSubject());
+            values.setInt(5, quotes.getUserId());
+            values.setString(6, quotes.getTeacher());
+            values.setString(7, quotes.getId());
+            values.setString(8, UserQuotes.user.getGroup());
+
+            values.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static int countQuotes() {
         try {
             Connections connect = new Connections();
@@ -158,5 +232,46 @@ public class Connections{
             return res.getInt("count");
         } catch (Exception e) {}
         return 0;
+    }
+
+    public static ArrayList<Quotes> UsersStatus() {
+        ArrayList<Quotes> arr = new ArrayList<>();
+
+        try {
+            Connections connect = new Connections();
+            Statement statement = connect.getDbConnection().createStatement();
+            String query = "";
+            if (UserQuotes.user.getStatus() == 1) {
+                query = String.format(
+                        "SELECT * FROM `Цитата` " +
+                                "WHERE `id_пользователя` = '%s'",
+                        UserQuotes.user.getId()
+                );
+            }
+            else if (UserQuotes.user.getStatus() == 2) {
+                query = String.format(
+                        "SELECT * FROM `Цитата` " +
+                                "WHERE (SELECT `Группа` FROM `Пользователь` WHERE `id`=`id_пользователя` LIMIT 1) = %s",
+                        UserQuotes.user.getGroup()
+                );
+            }
+            else if (UserQuotes.user.getStatus() == 3) {
+                query = String.format("SELECT * FROM `Цитата`");
+            }
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                arr.add(new Quotes(
+                        result.getString("id"),
+                        result.getString("Text"),
+                        result.getString("Date"),
+                        result.getString("Subject"),
+                        result.getInt("UserId"),
+                        result.getString("Teacher")
+                ));
+            }
+        } catch (Exception e) {}
+
+        return arr;
     }
 }

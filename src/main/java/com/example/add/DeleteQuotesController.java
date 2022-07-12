@@ -35,13 +35,21 @@ public class DeleteQuotesController {
         deleteQuotesButton.setOnAction(actionEvent -> {
             Connections connect = new Connections();
             try {
-                connect.deleteQuotes(Integer.parseInt(numberField.getText()));
+                if(UserQuotes.user.getStatus() == 3){
+                    connect.deleteQuotes3(Integer.parseInt(numberField.getText()));
+                }
+                else if(UserQuotes.user.getStatus() == 2){
+                    connect.deleteQuotes2(Integer.parseInt(numberField.getText()));
+                }
+                else if(UserQuotes.user.getStatus() == 1){
+                    connect.deleteQuotes1(Integer.parseInt(numberField.getText()));
+                }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
+            deleteQuotesButton.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("quotes.fxml"));
             try {

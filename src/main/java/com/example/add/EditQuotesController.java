@@ -44,7 +44,14 @@ public class EditQuotesController {
     @FXML
     void initialize() {
         editQuotesButton.setOnAction(actionEvent -> {
+            if(UserQuotes.user.getStatus() == 3){
+                editQuotes();
+            }
+            if(UserQuotes.user.getStatus() == 2){
+                editQuotes();
+            }
             editQuotes();
+            editQuotesButton.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("quotes.fxml"));
             try {
@@ -86,8 +93,17 @@ public class EditQuotesController {
         String teacher = teacherField.getText();
         Integer user_id = UserQuotes.user.getId();
 
+        //connect.UserStatus();
         Quotes quotes = new Quotes(id, text, date, subject, user_id, teacher);
 
-        connect.editQuotes(quotes);
+        if(UserQuotes.user.getStatus() == 3) {
+            connect.editQuotes3(quotes);
+        }
+        else if(UserQuotes.user.getStatus() == 2) {
+            connect.editQuotes2(quotes);
+        }
+        else if(UserQuotes.user.getStatus() == 1) {
+            connect.editQuotes1(quotes);
+        }
     }
 }

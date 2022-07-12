@@ -43,6 +43,7 @@ public class AddQuotesController {
     void initialize() {
         addQuotesButton.setOnAction(actionEvent -> {
             newQuotes();
+            addQuotesButton.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("quotes.fxml"));
             try {
