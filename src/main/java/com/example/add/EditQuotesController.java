@@ -44,12 +44,6 @@ public class EditQuotesController {
     @FXML
     void initialize() {
         editQuotesButton.setOnAction(actionEvent -> {
-            if(UserQuotes.user.getStatus() == 3){
-                editQuotes();
-            }
-            if(UserQuotes.user.getStatus() == 2){
-                editQuotes();
-            }
             editQuotes();
             editQuotesButton.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader();

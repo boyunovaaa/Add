@@ -116,8 +116,7 @@ public class Connections{
         Statement statement = connect.getDbConnection().createStatement();
         try {
         String query = String.format(
-                "DELETE FROM `Цитата` " +
-                        "WHERE `id`=%s",
+                "DELETE FROM `Цитата` WHERE `id`=%s",
                 id
         );
             statement.executeUpdate(query);
@@ -129,8 +128,7 @@ public class Connections{
         Statement statement = connect.getDbConnection().createStatement();
         try {
             String query = String.format(
-                    "DELETE FROM `Цитата` " +
-                            "WHERE `id`=%s AND id_пользователя=%s",
+                    "DELETE FROM `Цитата` WHERE `id`=%s AND id_пользователя=%s",
                     id, UserQuotes.user.getId()
             );
             statement.executeUpdate(query);
@@ -142,8 +140,7 @@ public class Connections{
         Statement statement = connect.getDbConnection().createStatement();
         try {
             String query = String.format(
-                    "DELETE FROM `Цитата` " +
-                            "WHERE `id`=%s AND (SELECT `Группа` FROM `Пользователь` WHERE `id`=`id_пользователя` LIMIT 1) = %s",
+                    "DELETE FROM `Цитата` WHERE `id`=%s AND (SELECT `Группа` FROM `Пользователь` WHERE `id`=`id_пользователя` LIMIT 1) = %s",
                     id, UserQuotes.user.getGroup()
             );
             statement.executeUpdate(query);
@@ -174,7 +171,8 @@ public class Connections{
 
     public void editQuotes2(Quotes quotes) {
 
-        String update = "UPDATE Цитата SET id=?, Текст=?, Дата=?, Предмет=?, id_пользователя=?, Преподаватель=? WHERE id=? AND id_пользователя=?";
+        String update = "UPDATE Цитата SET id=?, Текст=?, Дата=?, Предмет=?, id_пользователя=?, Преподаватель=?" +
+                "WHERE id=? AND id_пользователя=?";
 
         try {
             PreparedStatement values = getDbConnection().prepareStatement(update);
@@ -224,54 +222,12 @@ public class Connections{
             Connections connect = new Connections();
             Statement statement = connect.getDbConnection().createStatement();
 
-            String query = "SELECT COUNT(*) AS 'count' FROM `Цитата` " +
-                    "WHERE `id_пользователя`=" + UserQuotes.user.getId();
+            String query = "SELECT COUNT(*) AS 'count' FROM `Цитата` WHERE `id_пользователя`=" + UserQuotes.user.getId();
 
             ResultSet res = statement.executeQuery(query);
             res.next();
             return res.getInt("count");
         } catch (Exception e) {}
         return 0;
-    }
-
-    public static ArrayList<Quotes> UsersStatus() {
-        ArrayList<Quotes> arr = new ArrayList<>();
-
-        try {
-            Connections connect = new Connections();
-            Statement statement = connect.getDbConnection().createStatement();
-            String query = "";
-            if (UserQuotes.user.getStatus() == 1) {
-                query = String.format(
-                        "SELECT * FROM `Цитата` " +
-                                "WHERE `id_пользователя` = '%s'",
-                        UserQuotes.user.getId()
-                );
-            }
-            else if (UserQuotes.user.getStatus() == 2) {
-                query = String.format(
-                        "SELECT * FROM `Цитата` " +
-                                "WHERE (SELECT `Группа` FROM `Пользователь` WHERE `id`=`id_пользователя` LIMIT 1) = %s",
-                        UserQuotes.user.getGroup()
-                );
-            }
-            else if (UserQuotes.user.getStatus() == 3) {
-                query = String.format("SELECT * FROM `Цитата`");
-            }
-            ResultSet result = statement.executeQuery(query);
-
-            while (result.next()) {
-                arr.add(new Quotes(
-                        result.getString("id"),
-                        result.getString("Text"),
-                        result.getString("Date"),
-                        result.getString("Subject"),
-                        result.getInt("UserId"),
-                        result.getString("Teacher")
-                ));
-            }
-        } catch (Exception e) {}
-
-        return arr;
     }
 }

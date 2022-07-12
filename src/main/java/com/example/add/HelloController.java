@@ -44,12 +44,7 @@ public class HelloController{
             String TextLogin = loginField.getText().trim();
             String TextPass = passwordField.getText().trim();
 
-            if(!TextLogin.equals("") && !TextPass.equals("")){
-                UserLogin(TextLogin, TextPass);
-            }
-            else{
-                System.out.println("Error");
-            }
+            UserLogin(TextLogin, TextPass);
         });
 
         newUserButton.setOnAction(actionEvent -> {
